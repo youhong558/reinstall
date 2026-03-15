@@ -3102,6 +3102,14 @@ modify_windows() {
         bats="$bats windows-allow-ping.bat"
     fi
 
+# 0. 关闭 NLA（解决 CredSSP 身份验证错误）
+    cat > $os_dir/windows-disable-nla.bat << 'BATEOF'
+@echo off
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v UserAuthentication /t REG_DWORD /d 0 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v SecurityLayer /t REG_DWORD /d 0 /f
+BATEOF
+    bats="$bats windows-disable-nla.bat"
+
     # 3. 合并分区
     # 可能 unattend.xml 已经设置了ExtendOSPartition，不过运行resize没副作用
     download $confhome/windows-resize.bat $os_dir/windows-resize.bat
