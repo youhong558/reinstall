@@ -3968,46 +3968,39 @@ dd | *) username=root ;;
 esac
 
 if [ -n "$username" ]; then
-    echo "Username: $username"
+    echo "用户名: $username"
     if [ -n "$ssh_keys" ]; then
-        echo "Public Key: $ssh_keys"
+        echo "公钥: $ssh_keys"
     else
-        echo "Password: $password"
+        echo "密码: $password"
     fi
 fi
 
 if is_netboot_xyz; then
-    echo 'Reboot to start netboot.xyz.'
+    echo '重启后进入 netboot.xyz。'
 elif is_alpine_live; then
-    echo 'Reboot to start Alpine Live OS.'
+    echo '重启后进入 Alpine Live OS。'
 elif is_use_dd; then
     if [ -n "$cloud_data" ]; then
         echo "Cloud Data: $cloud_data"
         echo "Cloud Data Files: $cloud_data_files"
     fi
     show_dd_password_tips
-    echo 'Reboot to start DD.'
+    echo '重启后开始 DD。'
 elif [ "$distro" = fnos ]; then
-    echo "Special note for FNOS:"
-    echo "Reboot to start the installation."
-    echo "SSH login is disabled when installation completed."
-    echo "You need to config the account and password on http://SERVER_IP:5666 as soon as possible."
-    echo
     echo "飞牛 OS 注意事项："
     echo "重启后开始安装。"
     echo "安装完成后不支持 SSH 登录。"
     echo "你需要尽快在 http://SERVER_IP:5666 配置账号密码。"
 else
-    echo "Reboot to start the installation."
+    echo "重启后开始安装。"
 fi
 
 if is_in_windows; then
-    echo 'You can run this command to reboot:'
+    echo '可以运行以下命令重启:'
     echo 'shutdown /r /t 0'
 fi
 
 echo
-echo "If you want to revert all changes made by this script, run \"$reinstall_____ reset\""
-echo
-echo "If you want to revert all changes made by this script, run \"$reinstall_____ reset\""
+echo "如需撤销本脚本的所有更改，请运行 \"$reinstall_____ reset\""
 echo
